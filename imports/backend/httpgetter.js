@@ -1,6 +1,6 @@
 import { HTTP } from 'meteor/http'
 
-var GET_DATA = (url) =>{
+export var GET_DATA = () =>{
     return new Promise((resolves, rejects) =>{
         HTTP.call( 'GET', 'http://mappy.dali.dartmouth.edu/members.json', {},
         function( error, response ) {
@@ -14,4 +14,19 @@ var GET_DATA = (url) =>{
     })
 }
 
-GET_DATA('http://mappy.dali.dartmouth.edu/members.json').then(data => console.log(data))
+// for (var key in GET_DATA('None')){
+    // key = GET_DATA('None');
+    // console.log(key);
+// }
+
+// GET_DATA('').then(data => {
+//     // console.log(data['data']);
+//     for (var member_number in data['data']){
+//         console.log(data['data'][member_number]['name']);
+//     }
+// });
+
+
+// module.exports = {
+//     GET_DATA : (url) => {GET_DATA(url).then(data=>{return data})}
+// }
