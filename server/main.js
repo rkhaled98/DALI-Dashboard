@@ -7,7 +7,7 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
-  getJSON: (url) =>{
+  getJSON: () =>{
     // GET_DATA().then(data=>{return data});
     return new Promise((resolves,rejects)=>{
       GET_DATA().then(output=>{

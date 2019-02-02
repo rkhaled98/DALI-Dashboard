@@ -10,7 +10,7 @@ Template.hello.onCreated(function helloOnCreated() {
   // counter starts at 0
   console.log("hello")
   this.counter = new ReactiveVar(0);
-  Meteor.call("getJSON", "None", (error, result) => {
+  Meteor.call("getJSON" ,(error, result) => {
     if (error){
       console.log(error)
     }
@@ -25,9 +25,10 @@ Template.hello.helpers({
   },
 
   people(){
-    to_return = ""
-    for (var member_number in Session.get('result')['data']){
-        to_return +='\n'+(Session.get('result')['data'][member_number]['name']);
+    result = Session.get('result')
+    to_return = []
+    for (var member_number in result['data']){
+        to_return.push((result['data'][member_number]['name']));
     }
     return to_return;
     // Meteor.call("GET_DATA", "None", (result) => {

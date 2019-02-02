@@ -12,7 +12,14 @@
 <template name="hello">
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
-  <p>{{people}}</p>
+  <p>{{#each value in people}}
+      {{> person person_name=value}}
+    {{/each}}
+  </p>
+</template>
+
+<template name="person">
+  <h2>{{person_name}} </h2>
 </template>
 
 <template name="info">
