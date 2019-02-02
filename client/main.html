@@ -5,21 +5,22 @@
 <body>
   <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
+  {{> main}}
   {{> info}}
 </body>
 
-<template name="hello">
+<template name="main">
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
   <p>{{#each value in people}}
-      {{> person person_name=value}}
+      {{> person person_name=value.[0] person_pic=value.[1]}}
     {{/each}}
   </p>
 </template>
 
 <template name="person">
-  <h2>{{person_name}} </h2>
+  <h2>{{person_name}}</h2>
+  <img src={{person_pic}} height="200" width="200">
 </template>
 
 <template name="info">
