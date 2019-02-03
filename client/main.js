@@ -13,7 +13,7 @@ Meteor.startup(function() {
   GoogleMaps.load({ v: '3', key: 'AIzaSyAXfPpJ9yoNV03vijE6LAxntmiSN-dtxL4', libraries: 'geometry,places' });
   // Markers.remove({});
 
-
+  console.log("hello")
 });
 
 
@@ -146,8 +146,11 @@ Template.main.events({
 // });
 
 Template.carousel.onRendered(function mainOnRendered(){
-  $('.owl-carousel').owlCarousel({
-    items:6,
+  console.log("rendered!")
+  setTimeout(function func(){
+    let $owl = $('.my-carousel-div');
+  $owl.owlCarousel({
+    items:3,
     autoplay:true,
     autoplayTimeout:1500,
     autoplayHoverPause:true,
@@ -167,6 +170,8 @@ Template.carousel.onRendered(function mainOnRendered(){
       }
   }
   });
+  }, 350)
+  
 });
 
 
@@ -180,6 +185,8 @@ Template.carousel.helpers({
 
 Template.carousel.events({
   'click div'(event, instance) {
+    let $owl = $('.my-carousel-div');
+    $owl.trigger('refresh.owl.carousel');
     // increment the counter when button is clicked
     index = event.target.parentElement.id
     // result = Session.get('peopleArray');
