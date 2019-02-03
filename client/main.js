@@ -199,14 +199,20 @@ Template.ModalPopup.helpers({
   },
 
   image(){
-    return Session.get("person_to_show_modal")['iconUrl']
+    return Session.get("person_to_show_modal")['fullIconUrl']
   },
 
   mapOptions: function() {
+    lati = Session.get("person_to_show_modal")['lat_long'][0]
+    longi = Session.get("person_to_show_modal")['lat_long'][1]
     if (GoogleMaps.loaded()) {
       return {
-        center: new google.maps.LatLng(10.798042, 35.350880),
-        zoom: 8
+        center: new google.maps.LatLng(lati,longi),
+        zoom: 10,
+        streetViewControl: false,
+        rotateControl: false,
+        mapTypeControl: false,
+        fullscreenControl: false
       };
     }
   }
