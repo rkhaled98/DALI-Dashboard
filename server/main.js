@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
+import { Markers } from '../imports/api/markers';
 import {GET_DATA} from '../imports/backend/httpgetter'
 // var getter = require('../imports/backend/httpgetter')
 
 Meteor.startup(() => {
-  // code to run on server at startup
+  // GoogleMaps.load();
+  // Markers.remove({}); // Reset the markers da
 });
 
 Meteor.methods({

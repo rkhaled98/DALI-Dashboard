@@ -1,26 +1,48 @@
+
 <head>
   <title>DALI-Dashboard</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
+  <h1>Welcome to DALI Lab!</h1>
+  {{> carousel}}
+  {{> map}}
   {{> main}}
   {{> info}}
 </body>
 
+<template name="carousel">
+    <div class='owl-carousel'>
+        {{#each value in people}}
+        <div> 
+          {{value.[0]}}
+           <img src={{value.[1]}} height="200" width="200">
+           </div>
+        {{/each}}
+      </div>
+</template>
+
 <template name="main">
   <button>Click Me</button>
   <p>You've pressed the button {{counter}} times.</p>
+
   <p>{{#each value in people}}
-      {{> person person_name=value.[0] person_pic=value.[1]}}
+      {{> person person_name=value.[0] person_pic=value.[1] person_message = value.[2]}}
     {{/each}}
   </p>
+
 </template>
+
+<template name="map">  
+    <div class="map-container">
+      {{> googleMap name="map" options=mapOptions}}
+    </div>
+  </template>  
 
 <template name="person">
   <h2>{{person_name}}</h2>
-  <img src={{person_pic}} height="200" width="200">
+  <p><img src={{person_pic}} height="200" width="200"></p>
+  <h1>"{{person_message}}"</h1>
 </template>
 
 <template name="info">
