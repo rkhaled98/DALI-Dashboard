@@ -25,3 +25,6 @@ session
 dburles:google-maps
 markoshust:owl-carousel-2
 jquery
+iron:router
+twbs:bootstrap
+peppelg:bootstrap-3-modal

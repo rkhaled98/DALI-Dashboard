@@ -12,6 +12,10 @@ Meteor.startup(function() {
   GoogleMaps.load({ v: '3', key: 'AIzaSyAXfPpJ9yoNV03vijE6LAxntmiSN-dtxL4', libraries: 'geometry,places' });
   // Markers.remove({});
   
+  // setTimeout(function(){
+	// 	Modal.show('exampleModal')
+	// }, 3000)
+  
 });
 
 
@@ -169,6 +173,7 @@ Template.carousel.helpers({
     people = [];
     for (var member_number in result['data']){
         datum = []
+        datum.push(member_number)
         datum.push((result['data'][member_number]['name']));
         datum.push("http://mappy.dali.dartmouth.edu/"+(result['data'][member_number]['iconUrl']));
         datum.push((result['data'][member_number]['message']));
@@ -176,4 +181,16 @@ Template.carousel.helpers({
     }
     return people;
   }
+});
+
+
+Template.carousel.events({
+  'click div'(event, instance) {
+    // increment the counter when button is clicked
+    index = event.target.parentElement.id
+    result = Session.get('peopleJSON');
+    console.log(result['data'][index]);
+    Modal.show('exampleModal')
+    // instance.counter.set(instance.counter.get() + 1);
+  },
 });

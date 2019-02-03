@@ -14,9 +14,9 @@
 <template name="carousel">
     <div class='owl-carousel'>
         {{#each value in people}}
-        <div> 
-           <center><div id='carousel-name'>{{value.[0]}}</div></center>
-           <img src={{value.[1]}} height="200" width="200">
+        <div id={{value.[0]}}> 
+           <center><div id='carousel-name'>{{value.[1]}}</div></center>
+           <img src={{value.[2]}} height="200" width="200">
            </div>
         {{/each}}
       </div>
@@ -27,7 +27,7 @@
   <p>You've pressed the button {{counter}} times.</p>
 
   <p>{{#each value in people}}
-      {{> person person_name=value.[0] person_pic=value.[1] person_message = value.[2]}}
+      {{> person person_name=value.[1] person_pic=value.[2] person_message = value.[3]}}
     {{/each}}
   </p>
 
@@ -54,3 +54,25 @@
     <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
   </ul>
 </template>
+
+<template name="exampleModal">
+    <div class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          
+          <div class="modal-header">
+            <h4 class="modal-title">Modal example</h4>
+          </div>
+          
+          <div class="modal-body">
+            <p>A modal example.</p>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </template>
