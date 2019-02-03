@@ -140,11 +140,25 @@ Markers.find().observe({
 
 Template.carousel.onRendered(function mainOnRendered(){
   $('.owl-carousel').owlCarousel({
+    items:6,
     autoplay:true,
     autoplayTimeout:1500,
     autoplayHoverPause:true,
     margin:10,
     loop:true,
+    responsiveClass:true,
+    responsive:{
+      0:{
+          items:1,
+          nav:true
+      },
+      600:{
+          items:3,
+      },
+      1000:{
+          items:6,
+      }
+  }
   });
 });
 
