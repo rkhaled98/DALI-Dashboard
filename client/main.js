@@ -12,17 +12,13 @@ Meteor.startup(function() {
   GoogleMaps.load({ v: '3', key: 'AIzaSyAXfPpJ9yoNV03vijE6LAxntmiSN-dtxL4', libraries: 'geometry,places' });
   // Markers.remove({});
   
-  // setTimeout(function(){
-	// 	Modal.show('exampleModal')
-	// }, 3000)
-  
+
 });
 
 
 
 Template.main.onCreated(function helloOnCreated() {
   // counter starts at 0
-  console.log("hello")
   this.counter = new ReactiveVar(0);
 
   this.state=new ReactiveDict();
@@ -36,6 +32,17 @@ Template.main.onCreated(function helloOnCreated() {
     }
     console.log(result);
     Session.set('peopleJSON',result)
+
+    people = [];
+    for (var member_number in result['data']){
+        datum = []
+        datum.push(member_number);
+        datum.push((result['data'][member_number]['name']));
+        datum.push("http://mappy.dali.dartmouth.edu/"+(result['data'][member_number]['iconUrl']));
+        datum.push((result['data'][member_number]['message']));
+        people.push(datum)
+    }
+    Session.set('peopleArray',people)
   });
 });
 
@@ -45,16 +52,7 @@ Template.main.helpers({
   },
 
   people(){
-    result = Session.get('peopleJSON');
-    people = [];
-    for (var member_number in result['data']){
-        datum = []
-        datum.push((result['data'][member_number]['name']));
-        datum.push("http://mappy.dali.dartmouth.edu/"+(result['data'][member_number]['iconUrl']));
-        datum.push((result['data'][member_number]['message']));
-        people.push(datum)
-    }
-    return people;
+    return Session.get('peopleArray');
 
     },
 });
@@ -88,8 +86,6 @@ Template.map.onCreated(function() {
 
     result = Session.get('peopleJSON');
     people = [];
-    console.log("h" + Markers.find().count());
-    console.log(result['data'].length);
     if (Markers.find().count() != result['data'].length) {
       for (var member_number in result['data']){
         lati = result['data'][member_number]['lat_long'][0];
@@ -169,19 +165,10 @@ Template.carousel.onRendered(function mainOnRendered(){
 
 Template.carousel.helpers({  
   people(){
-    result = Session.get('peopleJSON');
-    people = [];
-    for (var member_number in result['data']){
-        datum = []
-        datum.push(member_number)
-        datum.push((result['data'][member_number]['name']));
-        datum.push("http://mappy.dali.dartmouth.edu/"+(result['data'][member_number]['iconUrl']));
-        datum.push((result['data'][member_number]['message']));
-        people.push(datum)
-    }
-    return people;
+    return Session.get('peopleArray');
   }
 });
+
 
 
 Template.carousel.events({
@@ -189,8 +176,18 @@ Template.carousel.events({
     // increment the counter when button is clicked
     index = event.target.parentElement.id
     result = Session.get('peopleJSON');
-    console.log(result['data'][index]);
-    Modal.show('exampleModal')
+    Session.set("json_to_show_modal", result['data'][index])
+    Modal.show('ModalPopup')
     // instance.counter.set(instance.counter.get() + 1);
   },
+});
+
+Template.ModalPopup.helpers({
+  name(){
+    return Session.get("json_to_show_modal")['name']
+  },
+
+  image(){
+    return Session.get("json_to_show_modal")['iconUrl']
+  }
 });
