@@ -5,13 +5,14 @@ import { Tracker } from 'meteor/tracker';
 import { Session } from 'meteor/session'
 import { Markers } from '../imports/api/markers';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { particlesJS } from '../imports/ui/particles';
 
 import './main.html';
 
 Meteor.startup(function() {  
   GoogleMaps.load({ v: '3', key: 'AIzaSyAXfPpJ9yoNV03vijE6LAxntmiSN-dtxL4', libraries: 'geometry,places' });
   // Markers.remove({});
-  
+
 
 });
 
@@ -202,6 +203,10 @@ Template.ModalPopup.helpers({
     return Session.get("person_to_show_modal")['fullIconUrl']
   },
 
+  quote(){
+    return Session.get("person_to_show_modal")['message']
+  },
+
   mapOptions: function() {
     lati = Session.get("person_to_show_modal")['lat_long'][0]
     longi = Session.get("person_to_show_modal")['lat_long'][1]
@@ -217,3 +222,9 @@ Template.ModalPopup.helpers({
     }
   }
 });
+
+// Template.body.onRendered(function bodyOnRendered(){
+//   particlesJS.load('particles-js', 'assets/particles.json', function() {
+//     console.log('callback - particles.js config loaded');
+//   });
+// });

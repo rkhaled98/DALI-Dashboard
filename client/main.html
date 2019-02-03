@@ -1,15 +1,25 @@
 
 <head>
   <title>DALI-Dashboard</title>
+  <script src="../imports/ui/particles.js"></script>
+  
 </head>
 
 <body>
   <h1>Welcome to DALI Lab!</h1>
+  <!-- {{> particles}} -->
+
+  <div class="particle-wrap">
+      <div id="particles-js"></div>
+    </div>
+
+    
   {{> carousel}}
   <!-- {{> map}} -->
   {{> main}}
-  {{> info}}
+  <script src="../imports/ui/particles.js"></script>
 </body>
+
 
 <template name="carousel">
     <div class='owl-carousel'>
@@ -23,13 +33,10 @@
 </template>
 
 <template name="main">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-
-  <p>{{#each value in people}}
+  <!-- <p>{{#each value in people}}
       {{> person person_name=value.[1] person_pic=value.[2] person_message = value.[3]}}
     {{/each}}
-  </p>
+  </p> -->
 
 </template>
 
@@ -45,15 +52,6 @@
   <h1>"{{person_message}}"</h1>
 </template>
 
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
-  </ul>
-</template>
 
 <template name="ModalPopup">
     <div class="modal fade">
@@ -67,6 +65,8 @@
           <div class="modal-body">
             <img class = "modal-image" src={{image}} height="200" width="200">
 
+            <h3 class = "modal-quote">"{{quote}}"</h3>
+
             <div class="map-container">
                 {{> googleMap name="map" options=mapOptions}}
               </div>
@@ -79,4 +79,10 @@
         </div>
       </div>
     </div>
+  </template>
+
+  <template name="particles">
+      <div class="particle-wrap">
+          <div id="particles-js"></div>
+        </div>
   </template>
