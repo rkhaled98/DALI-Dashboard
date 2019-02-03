@@ -6,7 +6,7 @@
 <body>
   <h1>Welcome to DALI Lab!</h1>
   {{> carousel}}
-  {{> map}}
+  <!-- {{> map}} -->
   {{> main}}
   {{> info}}
 </body>
@@ -65,7 +65,11 @@
           </div>
           
           <div class="modal-body">
-            <p>{{image}}</p>
+            <p><img src={{image}} height="200" width="200"></p>
+
+            <div class="map-container">
+                {{> googleMap name="map" options=mapOptions}}
+              </div>
           </div>
           
           <div class="modal-footer">

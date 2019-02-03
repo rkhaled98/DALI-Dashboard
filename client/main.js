@@ -31,7 +31,13 @@ Template.main.onCreated(function helloOnCreated() {
       console.log(error)
     }
     console.log(result);
+
+    for (var member_number in result['data']){
+      result['data'][member_number]['fullIconUrl'] = "http://mappy.dali.dartmouth.edu/"+result['data'][member_number]['iconUrl'];
+    }
+
     Session.set('peopleJSON',result)
+    
 
     people = [];
     for (var member_number in result['data']){
@@ -67,76 +73,76 @@ Template.main.events({
 
 
 
-Template.map.helpers({  
-  mapOptions: function() {
-    if (GoogleMaps.loaded()) {
-      return {
-        center: new google.maps.LatLng(10.798042, 35.350880),
-        zoom: 1
-      };
-    }
-  }
-});
+// Template.map.helpers({  
+//   mapOptions: function() {
+//     if (GoogleMaps.loaded()) {
+//       return {
+//         center: new google.maps.LatLng(10.798042, 35.350880),
+//         zoom: 8
+//       };
+//     }
+//   }
+// });
 
-Template.map.onCreated(function() {  
-  GoogleMaps.ready('map', function(map) {
-    // google.maps.event.addListener(map.instance, 'click', function(event) {
-    //   Markers.insert({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-    // });
+// Template.map.onCreated(function() {  
+//   GoogleMaps.ready('map', function(map) {
+//     // google.maps.event.addListener(map.instance, 'click', function(event) {
+//     //   Markers.insert({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+//     // });
 
-    result = Session.get('peopleJSON');
-    people = [];
-    if (Markers.find().count() != result['data'].length) {
-      for (var member_number in result['data']){
-        lati = result['data'][member_number]['lat_long'][0];
-        longi = result['data'][member_number]['lat_long'][1];
-        Markers.insert({lat: lati, lng: longi})
+//     result = Session.get('peopleJSON');
+//     people = [];
+//     if (Markers.find().count() != result['data'].length) {
+//       for (var member_number in result['data']){
+//         lati = result['data'][member_number]['lat_long'][0];
+//         longi = result['data'][member_number]['lat_long'][1];
+//         Markers.insert({lat: lati, lng: longi})
 
-    }
-    }
+//     }
+//     }
 
 
-    var markers = {};
+//     var markers = {};
 
-Markers.find().observe({  
-  added: function(document) {
-    // Create a marker for this document
-    var marker = new google.maps.Marker({
-      draggable: true,
-      animation: google.maps.Animation.DROP,
-      position: new google.maps.LatLng(document.lat, document.lng),
-      map: map.instance,
-      // We store the document _id on the marker in order 
-      // to update the document within the 'dragend' event below.
-      id: document._id
-    });
+// Markers.find().observe({  
+//   added: function(document) {
+//     // Create a marker for this document
+//     var marker = new google.maps.Marker({
+//       draggable: true,
+//       animation: google.maps.Animation.DROP,
+//       position: new google.maps.LatLng(document.lat, document.lng),
+//       map: map.instance,
+//       // We store the document _id on the marker in order 
+//       // to update the document within the 'dragend' event below.
+//       id: document._id
+//     });
 
-    // This listener lets us drag markers on the map and update their corresponding document.
-    google.maps.event.addListener(marker, 'dragend', function(event) {
-      Markers.update(marker.id, { $set: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
-    });
+//     // This listener lets us drag markers on the map and update their corresponding document.
+//     google.maps.event.addListener(marker, 'dragend', function(event) {
+//       Markers.update(marker.id, { $set: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
+//     });
 
-    // Store this marker instance within the markers object.
-    markers[document._id] = marker;
-  },
-  changed: function(newDocument, oldDocument) {
-    markers[newDocument._id].setPosition({ lat: newDocument.lat, lng: newDocument.lng });
-  },
-  removed: function(oldDocument) {
-    // Remove the marker from the map
-    markers[oldDocument._id].setMap(null);
+//     // Store this marker instance within the markers object.
+//     markers[document._id] = marker;
+//   },
+//   changed: function(newDocument, oldDocument) {
+//     markers[newDocument._id].setPosition({ lat: newDocument.lat, lng: newDocument.lng });
+//   },
+//   removed: function(oldDocument) {
+//     // Remove the marker from the map
+//     markers[oldDocument._id].setMap(null);
 
-    // Clear the event listener
-    google.maps.event.clearInstanceListeners(
-      markers[oldDocument._id]);
+//     // Clear the event listener
+//     google.maps.event.clearInstanceListeners(
+//       markers[oldDocument._id]);
 
-    // Remove the reference to this marker instance
-    delete markers[oldDocument._id];
-  }
-});
+//     // Remove the reference to this marker instance
+//     delete markers[oldDocument._id];
+//   }
+// });
 
-  });
-});
+//   });
+// });
 
 Template.carousel.onRendered(function mainOnRendered(){
   $('.owl-carousel').owlCarousel({
@@ -175,8 +181,12 @@ Template.carousel.events({
   'click div'(event, instance) {
     // increment the counter when button is clicked
     index = event.target.parentElement.id
-    result = Session.get('peopleJSON');
-    Session.set("json_to_show_modal", result['data'][index])
+    // result = Session.get('peopleArray');
+    // Session.set("person_to_show_modal", result[index])
+    result = Session.get('peopleJSON')['data'][index]
+    console.log(result)
+    // console.log(result)
+    Session.set("person_to_show_modal", result)
     Modal.show('ModalPopup')
     // instance.counter.set(instance.counter.get() + 1);
   },
@@ -184,10 +194,20 @@ Template.carousel.events({
 
 Template.ModalPopup.helpers({
   name(){
-    return Session.get("json_to_show_modal")['name']
+    console.log(Session.get("person_to_show_modal"))
+    return Session.get("person_to_show_modal")['name']
   },
 
   image(){
-    return Session.get("json_to_show_modal")['iconUrl']
+    return Session.get("person_to_show_modal")['iconUrl']
+  },
+
+  mapOptions: function() {
+    if (GoogleMaps.loaded()) {
+      return {
+        center: new google.maps.LatLng(10.798042, 35.350880),
+        zoom: 8
+      };
+    }
   }
 });
