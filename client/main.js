@@ -5,51 +5,61 @@ import { Tracker } from 'meteor/tracker';
 import { Session } from 'meteor/session'
 import { Markers } from '../imports/api/markers';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { particlesJS } from '../imports/ui/particles';
-
 import './main.html';
 
-Meteor.startup(function() {  
+Meteor.startup(function () {
   GoogleMaps.load({ v: '3', key: 'AIzaSyAXfPpJ9yoNV03vijE6LAxntmiSN-dtxL4', libraries: 'geometry,places' });
   // Markers.remove({});
 
   console.log("hello")
 });
 
-
+Template.body.onRendered(function () {
+  let settings = 'pjs-settings.json';
+  this.autorun(() => {
+    if (particlesJS) {
+      console.log(`loading particles.js config from "${settings}"`)
+      // window.particlesJS.load = function(tag_id, path_config_json, callback)
+      particlesJS.load('particles-js', settings, function () {
+        console.log('callback - particles.js config loaded');
+      });
+    }
+  });
+});
 
 Template.main.onCreated(function helloOnCreated() {
   // counter starts at 0
   this.counter = new ReactiveVar(0);
 
-  this.state=new ReactiveDict();
+  this.state = new ReactiveDict();
   Meteor.subscribe('markers');
 
   // GET LIVE JSON DATA FROM THE DALI WEBSITE
   // STORE THE DATA IN A SESSION VARIABLE "peopleJSON"
-  Meteor.call("getJSON" ,(error, result) => {
-    if (error){
+  Meteor.call("getJSON", (error, result) => {
+    if (error) {
       console.log(error)
     }
     console.log(result);
 
-    for (var member_number in result['data']){
-      result['data'][member_number]['fullIconUrl'] = "http://mappy.dali.dartmouth.edu/"+result['data'][member_number]['iconUrl'];
+    for (var member_number in result['data']) {
+      result['data'][member_number]['fullIconUrl'] = "http://mappy.dali.dartmouth.edu/" + result['data'][member_number]['iconUrl'];
+      result['data'][member_number]['fullUrl'] = "http:" + result['data'][member_number]['url'];
     }
 
-    Session.set('peopleJSON',result)
-    
+    Session.set('peopleJSON', result)
+
 
     people = [];
-    for (var member_number in result['data']){
-        datum = []
-        datum.push(member_number);
-        datum.push((result['data'][member_number]['name']));
-        datum.push("http://mappy.dali.dartmouth.edu/"+(result['data'][member_number]['iconUrl']));
-        datum.push((result['data'][member_number]['message']));
-        people.push(datum)
+    for (var member_number in result['data']) {
+      datum = []
+      datum.push(member_number);
+      datum.push((result['data'][member_number]['name']));
+      datum.push("http://mappy.dali.dartmouth.edu/" + (result['data'][member_number]['iconUrl']));
+      datum.push((result['data'][member_number]['message']));
+      people.push(datum)
     }
-    Session.set('peopleArray',people)
+    Session.set('peopleArray', people)
   });
 });
 
@@ -58,10 +68,10 @@ Template.main.helpers({
     return Template.instance().counter.get();
   },
 
-  people(){
+  people() {
     return Session.get('peopleArray');
 
-    },
+  },
 });
 
 Template.main.events({
@@ -145,38 +155,38 @@ Template.main.events({
 //   });
 // });
 
-Template.carousel.onRendered(function mainOnRendered(){
+Template.carousel.onRendered(function mainOnRendered() {
   console.log("rendered!")
-  setTimeout(function func(){
+  setTimeout(function func() {
     let $owl = $('.my-carousel-div');
-  $owl.owlCarousel({
-    items:3,
-    autoplay:true,
-    autoplayTimeout:1500,
-    autoplayHoverPause:true,
-    margin:10,
-    loop:true,
-    responsiveClass:true,
-    responsive:{
-      0:{
-          items:1,
-          nav:true
-      },
-      600:{
-          items:3,
-      },
-      1000:{
-          items:6,
+    $owl.owlCarousel({
+      items: 3,
+      autoplay: true,
+      autoplayTimeout: 1500,
+      autoplayHoverPause: true,
+      margin: 10,
+      loop: true,
+      responsiveClass: true,
+      responsive: {
+        0: {
+          items: 1,
+          nav: true
+        },
+        600: {
+          items: 3,
+        },
+        1000: {
+          items: 6,
+        }
       }
-  }
-  });
+    });
   }, 350)
-  
+
 });
 
 
-Template.carousel.helpers({  
-  people(){
+Template.carousel.helpers({
+  people() {
     return Session.get('peopleArray');
   }
 });
@@ -201,25 +211,46 @@ Template.carousel.events({
 });
 
 Template.ModalPopup.helpers({
-  name(){
+  name() {
     console.log(Session.get("person_to_show_modal"))
     return Session.get("person_to_show_modal")['name']
   },
 
-  image(){
+  image() {
     return Session.get("person_to_show_modal")['fullIconUrl']
   },
 
-  quote(){
+  quote() {
     return Session.get("person_to_show_modal")['message']
   },
 
-  mapOptions: function() {
+  site() {
+    return Session.get("person_to_show_modal")['fullUrl']
+  },
+
+  project() {
+    console.log(Session.get("person_to_show_modal")['project'][0])
+    if (Session.get("person_to_show_modal")['project'] != []) {
+      return Session.get("person_to_show_modal")['project'];
+    }
+    else{
+      return 0;
+    }
+  },
+
+  staff(){
+    if (Session.get("person_to_show_modal")['project'][0] == "Staff"){
+      return 1;
+    }
+    else{ return 0}
+  },
+
+  mapOptions: function () {
     lati = Session.get("person_to_show_modal")['lat_long'][0]
     longi = Session.get("person_to_show_modal")['lat_long'][1]
     if (GoogleMaps.loaded()) {
       return {
-        center: new google.maps.LatLng(lati,longi),
+        center: new google.maps.LatLng(lati, longi),
         zoom: 10,
         streetViewControl: false,
         rotateControl: false,
@@ -230,8 +261,3 @@ Template.ModalPopup.helpers({
   }
 });
 
-// Template.body.onRendered(function bodyOnRendered(){
-//   particlesJS.load('particles-js', 'assets/particles.json', function() {
-//     console.log('callback - particles.js config loaded');
-//   });
-// });

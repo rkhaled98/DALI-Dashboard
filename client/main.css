@@ -9,30 +9,95 @@
   height: 100%;
 }
 /* Optional: Makes the sample page fill the window. */
+
+.header-text{
+  text-align: center;
+  font-size: 75px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
+.modal-title{
+  font-size: 25px;
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+}
+
 .modal-image {
   width: 48%;
   max-width: 50%;
+  /* height: 200px; */
+  /* width: 200px; */
   margin-left: auto;
   margin-right: auto;
-  /* float: left; */
+  /* border-radius: 5%; */
+  /* float: right; */
+}
+
+img{
+  border-radius: 25%;
+}
+
+.modal-quote{
+  margin-left: auto;
+  margin-right: auto;
+  /* margin: 0 auto; */
+  font-size: 15px;
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
 }
 
 .map-container {
   width: 48%;
   max-width: 50%;
   height: 200px;
-  margin-left: auto;
+  /* margin-left: auto; */
   margin-right: auto;
-  /* float: right; */
+  /* float: left; */
 }
 
 #carousel-name{
   font-size: 25px;
   font-family: "Lucida Console", Monaco, monospace;
+}
+
+#particles-js {
+  position: absolute;
+  pointer-events: none;
+}
+
+.particle-wrap {
+  position: absolute;
+  pointer-events: none;
+  width: 99%;
+  height: 98%;
+}
+
+.content-wrap {
+  text-align: center;
+  background-color: rgba(228, 181, 34, 0.4);
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pulsate {
+  -webkit-animation: pulsate 3s ease-out;
+  -webkit-animation-iteration-count: infinite; 
+  opacity: 0.5;
+}
+@-webkit-keyframes pulsate {
+  0% { 
+      opacity: 0.5;
+  }
+  50% { 
+      opacity: 1.0;
+  }
+  100% { 
+      opacity: 0.5;
+  }
 }

@@ -1,17 +1,17 @@
 
 <head>
   <title>DALI-Dashboard</title>
-  <script src="../imports/ui/particles.js"></script>
   
 </head>
 
 <body>
-  <h1>Welcome to DALI Lab!</h1>
+  <h1 class="header-text pulsate">Welcome to DALI Lab!</h1>
   <!-- {{> particles}} -->
 
   <div class="particle-wrap">
       <div id="particles-js"></div>
     </div>
+
 
     
   {{> carousel}}
@@ -59,17 +59,34 @@
         <div class="modal-content">
           
           <div class="modal-header">
-            <h4 class="modal-title">{{name}}</h4>
+            <h4 class="modal-title">
+              {{#if staff}}
+              &#9812;
+              {{/if}}
+              {{name}} 
+              <a href={{site}}>&#127760;</a>
+              </h4>
           </div>
           
           <div class="modal-body">
-            <img class = "modal-image" src={{image}} height="200" width="200">
+            <div class = "modal-pic-quote">
+                <div class = "modal-image"><img src={{image}} height= "300" width="300"></div>
+                <h3 class = "modal-quote">
+                  "{{quote}}"{{project}}
+                  <br>
+                  
+                </h3>
+            </div>
 
-            <h3 class = "modal-quote">"{{quote}}"</h3>
 
             <div class="map-container">
+              {{name}}'s Home:
                 {{> googleMap name="map" options=mapOptions}}
               </div>
+          </div>
+
+          <div class="projects-view">
+            {{project}}
           </div>
           
           <div class="modal-footer">
