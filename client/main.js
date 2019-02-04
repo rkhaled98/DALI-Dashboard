@@ -230,11 +230,22 @@ Template.ModalPopup.helpers({
 
   project() {
     console.log(Session.get("person_to_show_modal")['project'][0])
-    if (Session.get("person_to_show_modal")['project'] != []) {
-      return Session.get("person_to_show_modal")['project'];
+    projects = Session.get("person_to_show_modal")['project']
+    console.log(projects);
+    if (projects[0] == ""){
+      console.log("nothing!")
+      return 0;
     }
     else{
-      return 0;
+      if (projects[0] == 'Staff'){
+        return "a Staff Member at DALI Lab"
+      }
+      if (projects.length == 1){
+        return `working on the ${projects[0]} project`
+      }
+      if (projects.length == 2){
+        return `working on the ${projects[0]} and the ${projects[1]} project`
+      }
     }
   },
 

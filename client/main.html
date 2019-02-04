@@ -90,7 +90,9 @@
               <div class="projects-view">
                 What has {{name}} been up to?
                 <br>
-                {{project}}
+                {{#if project}}
+                {{name}} is {{project}}
+                {{/if}}
               </div>
               </div>
             </div>
