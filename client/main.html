@@ -17,7 +17,6 @@
   {{> carousel}}
   <!-- {{> map}} -->
   {{> main}}
-  <script src="../imports/ui/particles.js"></script>
 </body>
 
 
@@ -61,7 +60,7 @@
           <div class="modal-header">
             <h4 class="modal-title">
               {{#if staff}}
-              &#9812;
+              <div class="crown">&#9812;</div>
               {{/if}}
               {{name}} 
               <a href={{site}}>&#127760;</a>
@@ -70,24 +69,37 @@
           
           <div class="modal-body">
             <div class = "modal-pic-quote">
-                <div class = "modal-image"><img src={{image}} height= "300" width="300"></div>
+                <div class = "modal-image"><img src={{image}} height= "250" width="250"></div>
                 <h3 class = "modal-quote">
-                  "{{quote}}"{{project}}
+                  "{{quote}}"
                   <br>
                   
                 </h3>
+
+            </div>
+
+            <div class="row-modal-map-project">
+              <div class="column-modal-map-project">
+                <div class="map-container" >
+                  <p>{{name}}'s Home:</p>
+                    {{> googleMap name="map" options=mapOptions}}
+                  </div>
+              </div>
+              <div class="column-modal-map-project">
+                
+              <div class="projects-view">
+                What has {{name}} been up to?
+                <br>
+                {{project}}
+              </div>
+              </div>
             </div>
 
 
-            <div class="map-container">
-              {{name}}'s Home:
-                {{> googleMap name="map" options=mapOptions}}
-              </div>
-          </div>
 
-          <div class="projects-view">
-            {{project}}
-          </div>
+          </div> <!--modal body end-->
+
+
           
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
