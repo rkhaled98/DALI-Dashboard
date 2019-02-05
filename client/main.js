@@ -75,11 +75,6 @@ Template.main.helpers({
 });
 
 Template.main.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    console.log("hello")
-    instance.counter.set(instance.counter.get() + 1);
-  },
 });
 
 
@@ -195,18 +190,17 @@ Template.carousel.helpers({
 
 Template.carousel.events({
   'click div'(event, instance) {
-    let $owl = $('.my-carousel-div');
-    $owl.trigger('refresh.owl.carousel');
-    // increment the counter when button is clicked
-    index = event.target.parentElement.id
-    // result = Session.get('peopleArray');
-    // Session.set("person_to_show_modal", result[index])
-    result = Session.get('peopleJSON')['data'][index]
-    console.log(result)
-    // console.log(result)
-    Session.set("person_to_show_modal", result)
-    Modal.show('ModalPopup')
-    // instance.counter.set(instance.counter.get() + 1);
+    index = event.target.parentElement.id // depends on the HTML
+    console.log(`index is ${index} with type ${typeof(index)}`);
+    if (index != ""){
+      result = Session.get('peopleJSON')['data'][index]
+      console.log(result)
+      // console.log(result)
+      Session.set("person_to_show_modal", result)
+      Modal.show('ModalPopup')
+      // instance.counter.set(instance.counter.get() + 1);
+    }
+
   },
 });
 
@@ -229,9 +223,7 @@ Template.ModalPopup.helpers({
   },
 
   project() {
-    console.log(Session.get("person_to_show_modal")['project'][0])
     projects = Session.get("person_to_show_modal")['project']
-    console.log(projects);
     if (projects[0] == ""){
       console.log("nothing!")
       return 0;

@@ -23,7 +23,7 @@
 <template name="carousel">
     <div class='owl-carousel my-carousel-div'>
         {{#each value in people}}
-        <div id={{value.[0]}}> 
+        <div id={{value.[0]}} class="person-in-carousel"> 
            <center><div id='carousel-name'>{{value.[1]}}</div></center>
            <img src={{value.[2]}} height="200" width="200">
            </div>
