@@ -11,15 +11,30 @@
 
 
 
-    
+  {{# if searching}}
+  {{> newcarousel}}
+  {{else}}
   {{> carousel}}
+  {{/ if}}
+  
   <!-- {{> map}} -->
-
-  <h3 class="footer-text">Click one of the awesome members above to learn more about them!</h3>
   {{> main}}
+  <h3 class="footer-text">Click one of the awesome members above to learn more about them!</h3>
+  {{> searchbar}}
     <!-- <div id="particles-js"></div> -->
 </body>
 
+
+<template name="newcarousel">
+  <div class='owl-carousel my-carousel-div'>
+      <!-- {{#each value in people}}
+      <div id={{value.[0]}} class="person-in-carousel"> 
+         <center><div id='carousel-name'>{{value.[1]}}</div></center>
+         <img src={{value.[2]}} height="200" width="200">
+         </div>
+      {{/each}} -->
+    </div>
+</template>
 
 <template name="carousel">
     <div class='owl-carousel my-carousel-div'>
@@ -119,5 +134,16 @@
           <div id="particles-js"></div>
         </div>
         
+  </template>
+
+  <template name="searchbar">
+    <div class="wrap">
+      <div class="search">
+         <input type="text" class="searchTerm" placeholder="Search for a member here by name!">
+         <button type="submit" class="searchButton">
+           <i class="fa fa-search"></i>
+        </button>
+      </div>
+   </div>
   </template>
 

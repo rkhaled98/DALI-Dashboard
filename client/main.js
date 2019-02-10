@@ -14,6 +14,8 @@ Meteor.startup(function () {
 
   console.log("hello")
 
+  Session.set("dataChanged","1")
+
   
 
 });
@@ -98,6 +100,25 @@ Template.body.onCreated(function bodyOnCreated() {
   
 });
 
+
+
+function reset_people_var(){
+  result = Session.get('peopleJSON');
+  console.log(result);
+  people = [];
+  for (var member_number in result['data']) {
+    datum = []
+    datum.push(member_number);
+    datum.push((result['data'][member_number]['name']));
+    datum.push("http://mappy.dali.dartmouth.edu/" + (result['data'][member_number]['iconUrl']));
+    datum.push((result['data'][member_number]['message']));
+    people.push(datum)
+  }
+  Session.set('peopleArray', people)
+  Session.set('dataChanged', Session.get('dataChanged')+"1")
+  console.log(Session.get('dataChanged'));
+}
+
 Template.main.onCreated(function helloOnCreated() {
   // counter starts at 0
 
@@ -144,8 +165,6 @@ Template.main.helpers({
   },
 });
 
-Template.main.events({
-});
 
 
 
@@ -220,43 +239,84 @@ Template.main.events({
 //   });
 // });
 
-
-
-Template.carousel.onRendered(function mainOnRendered() {
-  console.log("rendered!")
-  setTimeout(function func() {
-    let $owl = $('.my-carousel-div');
-    $owl.owlCarousel({
-      items: 3,
-      autoplay: true,
-      autoplayTimeout: 1500,
-      autoplayHoverPause: true,
-      margin: 10,
-      loop: true,
-      responsiveClass: true,
-      responsive: {
-        0: {
-          items: 1,
-          nav: true
-        },
-        600: {
-          items: 3,
-        },
-        1000: {
-          items: 6,
+Template.newcarousel.onRendered(function newCarouselOnRendered(){
+  this.autorun(() => {
+    console.log("we just autoran!!!")
+    let test = Session.get("dataChanged")
+    setTimeout(function func() {
+      let $owl = $('.my-carousel-div');
+      $owl.owlCarousel({
+        items: 1,
+        autoplay: true,
+        autoplayTimeout: 1500,
+        autoplayHoverPause: true,
+        margin: 10,
+        loop: true,
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 1,
+            nav: true
+          },
+          600: {
+            items: 1,
+          },
+          1000: {
+            items: 1,
+          }
         }
-      }
-    });
-  }, 1200)
-
+      });
+    }, 1200)
+  });
 });
 
-
-Template.carousel.helpers({
+Template.newcarousel.helpers({
   people() {
-    return Session.get('peopleArray');
+    peopleArrayNew = []
+    for (var i = 0; i < Session.get("peopleArray").length; i++){
+      
+    }
+    return Session.get('peopleArrayNew');
   }
 });
+
+
+Template.carousel.onRendered(function carouselOnRendered() {
+  console.log("rendered!")
+  this.autorun(() => {
+    console.log("we just autoran!!!")
+    let test = Session.get("dataChanged")
+    setTimeout(function func() {
+      let $owl = $('.my-carousel-div');
+      $owl.owlCarousel({
+        items: 3,
+        autoplay: true,
+        autoplayTimeout: 1500,
+        autoplayHoverPause: true,
+        margin: 10,
+        loop: true,
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 1,
+            nav: true
+          },
+          600: {
+            items: 3,
+          },
+          1000: {
+            items: 6,
+          }
+        }
+      });
+    }, 1200)
+  });
+
+
+}
+);
+
+
 
 
 
@@ -273,6 +333,26 @@ Template.carousel.events({
     }
   Session.set("test", Session.get("test") + "wow!");
     
+  },
+});
+
+Template.carousel.helpers({
+  people() {
+    return Session.get('peopleArray');
+  }
+});
+
+Template.searchbar.events({
+  'keyup .searchTerm'(event, instance){
+    if (event.which == 13){
+      console.log($(".searchTerm").val());
+      console.log(Session.get("peopleArray"))
+      Session.set("searching", 1)
+      // Session.set("peopleArray","")
+    }
+  },
+  'focusout .searchTerm'(event, instance){
+    // reset_people_var()
   },
 });
 
@@ -331,7 +411,7 @@ Template.ModalPopup.helpers({
     if (GoogleMaps.loaded()) {
       return {
         center: new google.maps.LatLng(lati, longi),
-        zoom: 10,
+        zoom: 9,
         streetViewControl: false,
         rotateControl: false,
         mapTypeControl: false,
