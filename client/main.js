@@ -7,29 +7,99 @@ import { Markers } from '../imports/api/markers';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import './main.html';
 
+
 Meteor.startup(function () {
   GoogleMaps.load({ v: '3', key: 'AIzaSyAXfPpJ9yoNV03vijE6LAxntmiSN-dtxL4', libraries: 'geometry,places' });
   // Markers.remove({});
 
   console.log("hello")
+
+  
+
 });
 
 Template.body.onRendered(function () {
-  let settings = 'pjs-settings.json';
+  let settings = 'pjs-settings-test.json';
   this.autorun(() => {
+    let lol = Session.get("test");
+    console.log("we just auto ran!!")
     if (particlesJS) {
-      console.log(`loading particles.js config from "${settings}"`)
-      // window.particlesJS.load = function(tag_id, path_config_json, callback)
+      console.log(`loading particles.js config from "${settings}"...`)
+      /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
       particlesJS.load('particles-js', settings, function () {
+        fetch(`${settings}`).then(data => {console.log(data)})
         console.log('callback - particles.js config loaded');
       });
     }
   });
+  // $.getJSON(settings, function(data) {
+  //   return new Promise((resolves, rejects) => {
+  //     data['particles']['shape']['img1'] = 
+  //     {
+  //       "src": "https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/18118884_105583170010283_3402265634081103440_n.jpg?_nc_cat=102&_nc_ht=scontent.fzty2-1.fna&oh=13a5a347847ebab48d43ba3006df1e69&oe=5CB2EB51",
+  //       "width": 100,
+  //       "height": 100,
+  //     };
+  //     // data['particles']['shape']['type'].push('img1');
+  //     data['particles']['shape']['type'].push('img1');
+  //     Meteor.call("writeJSON", data ,(error,result) => {
+  //       console.log(`settings are ${result}`);
+  //       resolves(result);
+  //     });
+  //     // data['particles']['shape']['type'].d
+  //     // console.log(data['particles']['shape']);
+  //     // fs.writeFile('myjsonfile.json', data, 'utf8', function (){
+  //     // resolves(settings);
+  //     // console.log(`settings are ${settings}`);
+  //     // });
+  //   })  
+  // }).then(settings => {
+  //   console.log(settings);
+  //   this.autorun(() => {
+  //     if (particlesJS) {
+  //       console.log(`loading particles.js config from "${settings}"`)
+  //       // window.particlesJS.load = function(tag_id, path_config_json, callback)
+  //       particlesJS.load('particles-js', 'pjs-settings-server.json', function () {
+  //         console.log('callback - particles.js config loaded');
+  //       });
+  //     }
+  //   });
+  // }
+  // );
+  // for (var i = 0; i < sets.length; i++){
+  //   console.log(sets[i]);
+  // }
+
+
+});
+
+Template.body.onCreated(function bodyOnCreated() {
+
+  let settings = 'pjs-settings.json';
+  $.getJSON(settings, function(data) {
+      data['particles']['shape']['img1'] = 
+      {
+        "src": "https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/18118884_105583170010283_3402265634081103440_n.jpg?_nc_cat=102&_nc_ht=scontent.fzty2-1.fna&oh=13a5a347847ebab48d43ba3006df1e69&oe=5CB2EB51",
+        "width": 100,
+        "height": 100,
+      };
+      console.log("wrote it")
+      // data['particles']['shape']['type'].push('img1');
+      data['particles']['shape']['type'].push('img1');
+      console.log("img1")
+      Meteor.call("writeJSON", data ,(error,result) => {
+        console.log(result);
+      });
+
+  }).then(function () {
+    Session.set("test", Session.get("test") + "wow!");
+  }
+  );
+  
 });
 
 Template.main.onCreated(function helloOnCreated() {
   // counter starts at 0
-  this.counter = new ReactiveVar(0);
 
   this.state = new ReactiveDict();
   Meteor.subscribe('markers');
@@ -175,7 +245,7 @@ Template.carousel.onRendered(function mainOnRendered() {
         }
       }
     });
-  }, 350)
+  }, 1200)
 
 });
 
@@ -190,17 +260,17 @@ Template.carousel.helpers({
 
 Template.carousel.events({
   'click div'(event, instance) {
-    index = event.target.parentElement.id // depends on the HTML
+    index = event.target.parentElement.id // depends on the HTML in carousel template
     console.log(`index is ${index} with type ${typeof(index)}`);
+    Session.set("test", Session.get("test") + "wow!")
     if (index != ""){
       result = Session.get('peopleJSON')['data'][index]
       console.log(result)
-      // console.log(result)
       Session.set("person_to_show_modal", result)
       Modal.show('ModalPopup')
-      // instance.counter.set(instance.counter.get() + 1);
     }
-
+  Session.set("test", Session.get("test") + "wow!");
+    
   },
 });
 
@@ -261,6 +331,6 @@ Template.ModalPopup.helpers({
         fullscreenControl: false
       };
     }
-  }
-});
+  },
 
+});

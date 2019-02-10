@@ -28,7 +28,7 @@ html, body {
 }
 
 .modal-image {
-  width: 48%;
+  width: 46%;
   max-width: 50%;
   /* height: 200px; */
   /* width: 200px; */
@@ -36,6 +36,12 @@ html, body {
   margin-right: auto;
   /* border-radius: 5%; */
   /* float: right; */
+}
+
+.carousel-img{
+  border-radius: 25%;
+  border-style: solid;
+  border-width: 5px;
 }
 
 img{
@@ -109,8 +115,7 @@ img{
 }
 
 #particles-js {
-  position: absolute;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .particle-wrap {
@@ -143,4 +148,14 @@ img{
   100% { 
       opacity: 0.5;
   }
+}
+
+.footer-text{
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 15px;
+}
+
+body{
+  background-color:#42c2f4;
 }
