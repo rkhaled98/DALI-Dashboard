@@ -17,9 +17,7 @@
 
   <h3 class="footer-text">Click one of the awesome members above to learn more about them!</h3>
   {{> main}}
-  <!-- <div class="particle-wrap"> -->
-    <div id="particles-js"></div>
-  <!-- </div> -->
+    <!-- <div id="particles-js"></div> -->
 </body>
 
 
@@ -82,20 +80,21 @@
             </div>
 
             <div class="row-modal-map-project">
-              <div class="column-modal-map-project">
+              <div class="column-modal-map-project-left">
                 <div class="map-container" >
-                  <p>{{name}}'s Home:</p>
+                  <p class="column-name">{{name}}'s Home:</p>
                     {{> googleMap name="map" options=mapOptions}}
                   </div>
               </div>
-              <div class="column-modal-map-project">
+              <div class="column-modal-map-project-right">
                 
               <div class="projects-view">
-                What has {{name}} been up to?
+                <p class="column-name">What has {{name}} been up to?</p>
                 <br>
                 {{#if project}}
-                {{name}} is {{project}}
+                <p>{{name}} is {{project}}</p>
                 {{/if}}
+                <p>Has been on in {{terms}}!</p>
               </div>
               </div>
             </div>
@@ -121,3 +120,4 @@
         </div>
         
   </template>
+

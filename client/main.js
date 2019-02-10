@@ -220,6 +220,8 @@ Template.main.events({
 //   });
 // });
 
+
+
 Template.carousel.onRendered(function mainOnRendered() {
   console.log("rendered!")
   setTimeout(function func() {
@@ -316,6 +318,11 @@ Template.ModalPopup.helpers({
       return 1;
     }
     else{ return 0}
+  },
+
+  terms(){
+    terms = Session.get("person_to_show_modal")['terms_on']
+    return terms.join(' and ')
   },
 
   mapOptions: function () {
