@@ -10,29 +10,44 @@
 
 
 
-
-  {{# if searching}}
-  {{> newcarousel}}
-  {{else}}
   {{> carousel}}
-  {{/ if}}
+
   
   <!-- {{> map}} -->
   {{> main}}
   <h3 class="footer-text">Click one of the awesome members above to learn more about them!</h3>
   {{> searchbar}}
+  <br>
+  {{# if searching}}
+  {{> searchedPeople}}
+  
+  {{/ if}}
     <!-- <div id="particles-js"></div> -->
 </body>
 
+<template name="searchedPeople">
+  <div class="searchedPerson my-carousel-div">
+    {{#each value in people}}
+    <div id={{value.[0]}}> 
+       
+       <center>
+         <br>
+         <div id='searched-name'>I'm {{value.[1]}}! Click me!</div>
+         <!-- <br> -->
+         <img src={{value.[2]}} height="200" width="200"></center>
+       </div>
+    {{/each}}
+  </div>
+</template>
 
 <template name="newcarousel">
   <div class='owl-carousel my-carousel-div'>
-      <!-- {{#each value in people}}
+      {{#each value in people}}
       <div id={{value.[0]}} class="person-in-carousel"> 
          <center><div id='carousel-name'>{{value.[1]}}</div></center>
          <img src={{value.[2]}} height="200" width="200">
          </div>
-      {{/each}} -->
+      {{/each}}
     </div>
 </template>
 
@@ -69,7 +84,7 @@
 
 
 <template name="ModalPopup">
-    <div class="modal fade">
+    <div class="modal fade" id="modalmain">
       <div class="modal-dialog">
         <div class="modal-content">
           
@@ -140,9 +155,9 @@
     <div class="wrap">
       <div class="search">
          <input type="text" class="searchTerm" placeholder="Search for a member here by name!">
-         <button type="submit" class="searchButton">
+         <!-- <button type="submit" class="searchButton">
            <i class="fa fa-search"></i>
-        </button>
+        </button> -->
       </div>
    </div>
   </template>

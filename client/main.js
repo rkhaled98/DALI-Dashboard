@@ -15,7 +15,7 @@ Meteor.startup(function () {
   console.log("hello")
 
   Session.set("dataChanged","1")
-
+  Session.set("mainmodaltimeout",1200)
   
 
 });
@@ -98,6 +98,12 @@ Template.body.onCreated(function bodyOnCreated() {
   }
   );
   
+});
+
+Template.body.helpers({
+  searching(){
+    return Session.get("searching") // 0 if in search bar and enter hit
+  }
 });
 
 
@@ -246,8 +252,8 @@ Template.newcarousel.onRendered(function newCarouselOnRendered(){
     setTimeout(function func() {
       let $owl = $('.my-carousel-div');
       $owl.owlCarousel({
-        items: 1,
-        autoplay: true,
+        items: 6,
+        // autoplay: true,
         autoplayTimeout: 1500,
         autoplayHoverPause: true,
         margin: 10,
@@ -255,35 +261,48 @@ Template.newcarousel.onRendered(function newCarouselOnRendered(){
         responsiveClass: true,
         responsive: {
           0: {
-            items: 1,
+            items: 6,
             nav: true
           },
           600: {
-            items: 1,
+            items: 6,
           },
           1000: {
-            items: 1,
+            items: 6,
           }
         }
       });
-    }, 1200)
+    }, 0)
   });
 });
 
 Template.newcarousel.helpers({
   people() {
-    peopleArrayNew = []
-    for (var i = 0; i < Session.get("peopleArray").length; i++){
-      
-    }
-    return Session.get('peopleArrayNew');
+    return Session.get("peopleArrayNew")
   }
+});
+
+Template.newcarousel.events({
+  'click div'(event, instance) {
+    console.log("this worked")
+    index = event.target.parentElement.id // depends on the HTML in carousel template
+    console.log(`index is ${index} with type ${typeof(index)}`);
+    Session.set("test", Session.get("test") + "wow!")
+    if (index != ""){
+      result = Session.get('peopleJSON')['data'][index]
+      console.log(result)
+      Session.set("person_to_show_modal", result)
+      Modal.show('ModalPopup')
+    }
+  // Session.set("test", Session.get("test") + "wow!");
+    
+  },
 });
 
 
 Template.carousel.onRendered(function carouselOnRendered() {
   console.log("rendered!")
-  this.autorun(() => {
+  // this.autorun(() => {
     console.log("we just autoran!!!")
     let test = Session.get("dataChanged")
     setTimeout(function func() {
@@ -309,8 +328,8 @@ Template.carousel.onRendered(function carouselOnRendered() {
           }
         }
       });
-    }, 1200)
-  });
+    }, Session.get("mainmodaltimeout"))
+  // });
 
 
 }
@@ -345,14 +364,27 @@ Template.carousel.helpers({
 Template.searchbar.events({
   'keyup .searchTerm'(event, instance){
     if (event.which == 13){
-      console.log($(".searchTerm").val());
+      Session.set("peopleArrayNew",[])
+      searchedInput = $(".searchTerm").val().toLowerCase();
       console.log(Session.get("peopleArray"))
-      Session.set("searching", 1)
+      peopleArrayNew = []
+      result = Session.get("peopleArray")
+      for (var i = 0; i < result.length; i++){
+        if (result[i][1].toLowerCase() == searchedInput){
+          peopleArrayNew.push(result[i])
+        }
+      }
+      if (peopleArrayNew.length!=0){
+        Session.set("searching", 1)      
+        Session.set("peopleArrayNew",peopleArrayNew)
+      }
+
+      // return Session.get('peopleArrayNew');
       // Session.set("peopleArray","")
     }
   },
   'focusout .searchTerm'(event, instance){
-    // reset_people_var()
+    $(".searchTerm").val("");
   },
 });
 
@@ -420,4 +452,38 @@ Template.ModalPopup.helpers({
     }
   },
 
+});
+
+Template.ModalPopup.events({
+  'click button.btn-default'(event, instance){
+      Session.set("searching",0)
+      Session.set("mainmodaltimeout",10) // we want the modal to load faster no need to be safe about reload
+  },
+  'hide.bs.modal #modalmain'(event, instance){
+    console.log("hello")
+    Session.set("searching",0)
+    Session.set("mainmodaltimeout",10) // we want the modal to load faster no need to be safe about reload
+    
+},
+
+});
+
+Template.searchedPeople.helpers({
+  people(){
+    return Session.get("peopleArrayNew");
+  }
+});
+
+Template.searchedPeople.events({
+  'click div'(event, instance){
+    index = event.target.parentElement.parentElement.id // depends on the HTML in carousel template
+    console.log(`index is ${index} with type ${typeof(index)}`);
+    Session.set("test", Session.get("test") + "wow!")
+    if (index != ""){
+      result = Session.get('peopleJSON')['data'][index]
+      console.log(result)
+      Session.set("person_to_show_modal", result)
+      Modal.show('ModalPopup')
+    }
+  }
 });
