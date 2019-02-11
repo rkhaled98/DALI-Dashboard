@@ -18,46 +18,46 @@ Meteor.startup(function () {
 
 });
 
-Template.body.onRendered(function () {
-  let settings = 'pjs-settings-test.json';
-  this.autorun(() => {
-    let lol = Session.get("test");
-    console.log("we just auto ran!!")
-    if (particlesJS) {
-      console.log(`loading particles.js config from "${settings}"...`)
-      /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-      particlesJS.load('particles-js', settings, function () {
-        fetch(`${settings}`).then(data => {console.log(data)})
-        console.log('callback - particles.js config loaded');
-      });
-    }
-  });
-});
+// Template.body.onRendered(function () {
+//   let settings = 'pjs-settings-test.json';
+//   this.autorun(() => {
+//     let lol = Session.get("test");
+//     console.log("we just auto ran!!")
+//     if (particlesJS) {
+//       console.log(`loading particles.js config from "${settings}"...`)
+//       /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+//       particlesJS.load('particles-js', settings, function () {
+//         fetch(`${settings}`).then(data => {console.log(data)})
+//         console.log('callback - particles.js config loaded');
+//       });
+//     }
+//   });
+// });
 
-Template.body.onCreated(function bodyOnCreated() {
+// Template.body.onCreated(function bodyOnCreated() {
 
-  let settings = 'pjs-settings.json';
-  $.getJSON(settings, function(data) {
-      data['particles']['shape']['img1'] = 
-      {
-        "src": "https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/18118884_105583170010283_3402265634081103440_n.jpg?_nc_cat=102&_nc_ht=scontent.fzty2-1.fna&oh=13a5a347847ebab48d43ba3006df1e69&oe=5CB2EB51",
-        "width": 100,
-        "height": 100,
-      };
-      console.log("wrote it")
-      // data['particles']['shape']['type'].push('img1');
-      data['particles']['shape']['type'].push('img1');
-      console.log("img1")
-      Meteor.call("writeJSON", data ,(error,result) => {
-        console.log(result);
-      });
+//   let settings = 'pjs-settings.json';
+//   $.getJSON(settings, function(data) {
+//       data['particles']['shape']['img1'] = 
+//       {
+//         "src": "https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/18118884_105583170010283_3402265634081103440_n.jpg?_nc_cat=102&_nc_ht=scontent.fzty2-1.fna&oh=13a5a347847ebab48d43ba3006df1e69&oe=5CB2EB51",
+//         "width": 100,
+//         "height": 100,
+//       };
+//       console.log("wrote it")
+//       // data['particles']['shape']['type'].push('img1');
+//       data['particles']['shape']['type'].push('img1');
+//       console.log("img1")
+//       Meteor.call("writeJSON", data ,(error,result) => {
+//         console.log(result);
+//       });
 
-  }).then(function () {
-    Session.set("test", Session.get("test") + "wow!");
-  }
-  );
+//   }).then(function () {
+//     Session.set("test", Session.get("test") + "wow!");
+//   }
+//   );
   
-});
+// });
 
 Template.body.helpers({
   searching(){
