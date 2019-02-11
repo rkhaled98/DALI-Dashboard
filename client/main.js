@@ -214,7 +214,7 @@ Template.carousel.onRendered(function carouselOnRendered() {
           }
         }
       });
-    }, 1200)
+    }, 2000)
   // });
 
 
