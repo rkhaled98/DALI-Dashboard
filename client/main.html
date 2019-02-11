@@ -6,23 +6,16 @@
 <body>
   
   <h1 class="header-text pulsate">Welcome to DALI Lab!</h1>
-  <!-- {{> particles}} -->
-
-
 
   {{> carousel}}
 
-  
-  <!-- {{> map}} -->
   {{> main}}
   <h3 class="footer-text">Click one of the awesome members above to learn more about them!</h3>
   {{> searchbar}}
   <br>
   {{# if searching}}
   {{> searchedPeople}}
-  
   {{/ if}}
-    <!-- <div id="particles-js"></div> -->
 </body>
 
 <template name="searchedPeople">
@@ -155,9 +148,6 @@
     <div class="wrap">
       <div class="search">
          <input type="text" class="searchTerm" placeholder="Search for a member here by name!">
-         <!-- <button type="submit" class="searchButton">
-           <i class="fa fa-search"></i>
-        </button> -->
       </div>
    </div>
   </template>
