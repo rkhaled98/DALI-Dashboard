@@ -1,153 +1,22 @@
-
-
-
-
-
-/* body {
-  padding: 10px;
-  font-family: sans-serif;
-} */
-
-/* Always set the map height explicitly to define the size of the div
-  * element that contains the map. */
-#map {
-  height: 50%;
-}
-/* Optional: Makes the sample page fill the window. */
+/* main styles */
+/* main styles */
+/* main styles */
 
 .header-text{
   text-align: center;
-  font-size: 75px;
+  font-size: 60px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.header-text2{
+  text-align: center;
+  font-size: 45;
   font-family: "Lucida Console", Monaco, monospace;
 }
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-.modal-title{
-  font-size: 25px;
-  font-family: "Lucida Console", Monaco, monospace;
-  text-align: center;
-}
-
-.modal-image {
-  width: 46%;
-  max-width: 50%;
-  /* height: 200px; */
-  /* width: 200px; */
-  margin-left: auto;
-  margin-right: auto;
-  /* border-radius: 5%; */
-  /* float: right; */
-}
-
-.carousel-img{
-  border-radius: 25%;
-  border-style: solid;
-  border-width: 5px;
-}
-
-img{
-  border-radius: 25%;
-}
-
-.modal-quote{
-  margin-left: auto;
-  margin-right: auto;
-  /* margin: 0 auto; */
-  font-size: 15px;
-  font-family: "Lucida Console", Monaco, monospace;
-  text-align: center;
-}
-
-.modal-body{
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.map-container {
-  width: 100%;
-  max-width: 100%;
-  height: 200px;
-  /* margin-left: auto; */
-  /* margin-left: auto; */
-  /* margin: 0 0;
-  margin-right: auto;
-  border-radius: 25px; */
-  /* float: left; */
-}
-
-.map-container > p{
-  text-align: center;
-  margin-bottom: 0px;
-  font-family: "Lucida Console", Monaco, monospace;
-  font-size: 12.5px;
-  font-weight: bold;
-}
-
-.column-name {
-  text-align: center;
-  margin-bottom: 0px;
-  font-family: "Lucida Console", Monaco, monospace;
-  font-size: 12.5px;
-  font-weight: bold;
-}
-
-.projects-view{
-  text-align: center;
-  font-size: 15px;
-  font-family: "Lucida Console", Monaco, monospace;
-}
-
-/* map > div {
-  border-radius: 10px;
-} */
-
-.column-modal-map-project-left {
-  float: left;
-  width: 48%;
-}
-.column-modal-map-project-right {
-  float: right;
-  width: 48%;
-}
-
-/* Clear floats after the columns */
-.row-modal-map-project:after {
-
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.crown{
-  font-size: 30px;
-}
-
-#carousel-name{
-  font-size: 25px;
-  font-family: "Lucida Console", Monaco, monospace;
-}
-
-#particles-js {
-  /* pointer-events: none; */
-}
-
-.particle-wrap {
-  position: absolute;
-  pointer-events: none;
-  width: 99%;
-  height: 98%;
-}
-
-.content-wrap {
-  text-align: center;
-  background-color: rgba(228, 181, 34, 0.4);
-  display:flex;
-  justify-content: center;
-  align-items: center;
+  background-color:#42c2f4;
 }
 
 .pulsate {
@@ -167,15 +36,134 @@ img{
   }
 }
 
+.content-wrap {
+  text-align: center;
+  background-color: rgba(228, 181, 34, 0.4);
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .footer-text{
   text-align: center;
   font-family: "Lucida Console", Monaco, monospace;
   font-size: 15px;
 }
 
-body{
-  background-color:#42c2f4;
+#footer {
+  text-align: center;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:30x;   /* Height of the footer */
+  background:#6cf;
 }
+
+/* modal popup styles */
+/* modal popup styles */
+/* modal popup styles */
+
+.modal-title{
+  font-size: 25px;
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+}
+
+.modal-image {
+  width: 46%;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-quote{
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 15px;
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+}
+
+.modal-body{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* carousel styles */
+/* carousel styles */
+/* carousel styles */
+
+.carousel-img{
+  border-radius: 25%;
+  border-style: solid;
+  border-width: 5px;
+}
+
+img{
+  border-radius: 25%;
+}
+
+#map {
+    height: 50%;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 100%;
+  height: 200px;
+}
+
+.map-container > p{
+  text-align: center;
+  margin-bottom: 0px;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 12.5px;
+  font-weight: bold;
+}
+
+/* modal layout grids */
+
+.column-name {
+  text-align: center;
+  margin-bottom: 0px;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 12.5px;
+  font-weight: bold;
+}
+
+.projects-view{
+  text-align: center;
+  font-size: 15px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+.column-modal-map-project-left {
+  float: left;
+  width: 48%;
+}
+.column-modal-map-project-right {
+  float: right;
+  width: 48%;
+}
+
+/* Clear floats after the columns */
+.row-modal-map-project:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* crown for staff members */
+.crown{
+  font-size: 30px;
+}
+
+#carousel-name{
+  font-size: 25px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+/* search bar styles */
 
 
 .search {
@@ -216,17 +204,11 @@ body{
   font-size: 20px;
 }
 
-/*Resize the wrap to see the search bar change!*/
 .wrap{
   width: 100%;
-  /* height: 300px; */
-  /* margin-left: auto;
-  margin-right: auto; */
-  /* position: absolute; */
-  /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
 }
+
+/* searched person styles */
 
 .searchedPerson{
   margin-left:auto;
