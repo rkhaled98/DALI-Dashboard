@@ -186,7 +186,6 @@ Template.newcarousel.events({
 
 
 Template.carousel.onRendered(function carouselOnRendered() {
-  time = 1200;
 
   console.log("rendered!")
   // this.autorun(() => {
@@ -215,7 +214,7 @@ Template.carousel.onRendered(function carouselOnRendered() {
           }
         }
       });
-    }, time)
+    }, 1200)
   // });
 
 
