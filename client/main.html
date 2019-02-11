@@ -7,7 +7,11 @@
   
   <h1 class="header-text pulsate">Welcome to DALI Lab!</h1>
 
+  {{# if loaded}}
   {{> carousel}}
+  {{else}}
+    LOADING
+  {{/if}}
 
   {{> main}}
   <h3 class="footer-text">Click one of the awesome members above to learn more about them!!</h3>

@@ -13,11 +13,48 @@ Meteor.startup(function () {
 
   console.log("hello")
 
-  Session.set("dataChanged","1")
-  
+  Session.set("dataChanged", "1")
+
+  Session.set("loaded", 0)
+
 
 });
 
+Template.body.onRendered(function(){
+  (new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        console.log("successfully resolving");
+        let $owl = $('.my-carousel-div');
+        $owl.owlCarousel({
+          items: 3,
+          autoplay: true,
+          autoplayTimeout: 1500,
+          autoplayHoverPause: true,
+          margin: 10,
+          loop: true,
+          responsiveClass: true,
+          responsive: {
+            0: {
+              items: 1,
+              nav: true
+            },
+            600: {
+              items: 3,
+            },
+            1000: {
+              items: 6,
+            }
+          }
+        });
+        resolve();
+    }, 2000);
+})).then(function () {
+  Session.set("loaded", 1)
+    console.log("Promise succeeded");
+}, function () {
+    console.log("Promise failed");
+});
+});
 // Template.body.onRendered(function () {
 //   let settings = 'pjs-settings-test.json';
 //   this.autorun(() => {
@@ -56,18 +93,21 @@ Meteor.startup(function () {
 //     Session.set("test", Session.get("test") + "wow!");
 //   }
 //   );
-  
+
 // });
 
 Template.body.helpers({
-  searching(){
-    return Session.get("searching") // 0 if in search bar and enter hit
+  searching() {
+    return Session.get("searching"); // 0 if in search bar and enter hit
+  },
+  loaded() {
+    return Session.get("loaded");
   }
 });
 
 
 
-function reset_people_var(){
+function reset_people_var() {
   result = Session.get('peopleJSON');
   console.log(result);
   people = [];
@@ -80,7 +120,7 @@ function reset_people_var(){
     people.push(datum)
   }
   Session.set('peopleArray', people)
-  Session.set('dataChanged', Session.get('dataChanged')+"1")
+  Session.set('dataChanged', Session.get('dataChanged') + "1")
   console.log(Session.get('dataChanged'));
 }
 
@@ -180,64 +220,93 @@ Template.main.helpers({
 //       Modal.show('ModalPopup')
 //     }
 //   // Session.set("test", Session.get("test") + "wow!");
-    
+
 //   },
 // });
 
 
 Template.carousel.onRendered(function carouselOnRendered() {
 
-  console.log("rendered!")
-  // this.autorun(() => {
-    console.log("we just autoran!!!")
-    let test = Session.get("dataChanged")
-    setTimeout(function func() {
-      let $owl = $('.my-carousel-div');
-      $owl.owlCarousel({
-        items: 3,
-        autoplay: true,
-        autoplayTimeout: 1500,
-        autoplayHoverPause: true,
-        margin: 10,
-        loop: true,
-        responsiveClass: true,
-        responsive: {
-          0: {
-            items: 1,
-            nav: true
-          },
-          600: {
-            items: 3,
-          },
-          1000: {
-            items: 6,
+  (new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        console.log("successfully resolving");
+        let $owl = $('.my-carousel-div');
+        $owl.owlCarousel({
+          items: 3,
+          autoplay: true,
+          autoplayTimeout: 1500,
+          autoplayHoverPause: true,
+          margin: 10,
+          loop: true,
+          responsiveClass: true,
+          responsive: {
+            0: {
+              items: 1,
+              nav: true
+            },
+            600: {
+              items: 3,
+            },
+            1000: {
+              items: 6,
+            }
           }
-        }
-      });
-    }, 2000)
+        });
+        resolve();
+    }, 2000);
+})).then(function () {
+  Session.set("loaded", 1)
+    console.log("Promise succeeded");
+}, function () {
+    console.log("Promise failed");
+});
+  // let test = Session.get("dataChanged")
+  // setTimeout(function func() {
+  //   let $owl = $('.my-carousel-div');
+  //   $owl.owlCarousel({
+  //     items: 3,
+  //     autoplay: true,
+  //     autoplayTimeout: 1500,
+  //     autoplayHoverPause: true,
+  //     margin: 10,
+  //     loop: true,
+  //     responsiveClass: true,
+  //     responsive: {
+  //       0: {
+  //         items: 1,
+  //         nav: true
+  //       },
+  //       600: {
+  //         items: 3,
+  //       },
+  //       1000: {
+  //         items: 6,
+  //       }
+  //     }
+  //   });
+  // }, 2000).then(() => {
+  //   console.log("LOADED!")
+  //   Session.set("loaded", 1)
+  // })
   // });
 
 
 }
 );
 
-
-
-
-
 Template.carousel.events({
   'click div'(event, instance) {
     index = event.target.parentElement.id // depends on the HTML in carousel template
-    console.log(`index is ${index} with type ${typeof(index)}`);
+    console.log(`index is ${index} with type ${typeof (index)}`);
     Session.set("test", Session.get("test") + "wow!")
-    if (index != ""){
+    if (index != "") {
       result = Session.get('peopleJSON')['data'][index]
       console.log(result)
       Session.set("person_to_show_modal", result)
       Modal.show('ModalPopup')
     }
-  Session.set("test", Session.get("test") + "wow!");
-    
+    Session.set("test", Session.get("test") + "wow!");
+
   },
 });
 
@@ -248,28 +317,28 @@ Template.carousel.helpers({
 });
 
 Template.searchbar.events({
-  'keyup .searchTerm'(event, instance){
-    if (event.which == 13){
-      Session.set("peopleArrayNew",[])
+  'keyup .searchTerm'(event, instance) {
+    if (event.which == 13) {
+      Session.set("peopleArrayNew", [])
       searchedInput = $(".searchTerm").val().toLowerCase();
       console.log(Session.get("peopleArray"))
       peopleArrayNew = []
       result = Session.get("peopleArray")
-      for (var i = 0; i < result.length; i++){
-        if (result[i][1].toLowerCase() == searchedInput){
+      for (var i = 0; i < result.length; i++) {
+        if (result[i][1].toLowerCase() == searchedInput) {
           peopleArrayNew.push(result[i])
         }
       }
-      if (peopleArrayNew.length!=0){
-        Session.set("searching", 1)      
-        Session.set("peopleArrayNew",peopleArrayNew)
+      if (peopleArrayNew.length != 0) {
+        Session.set("searching", 1)
+        Session.set("peopleArrayNew", peopleArrayNew)
       }
 
       // return Session.get('peopleArrayNew');
       // Session.set("peopleArray","")
     }
   },
-  'focusout .searchTerm'(event, instance){
+  'focusout .searchTerm'(event, instance) {
     $(".searchTerm").val("");
   },
 });
@@ -294,31 +363,31 @@ Template.ModalPopup.helpers({
 
   project() {
     projects = Session.get("person_to_show_modal")['project']
-    if (projects[0] == ""){
+    if (projects[0] == "") {
       console.log("nothing!")
       return 0;
     }
-    else{
-      if (projects[0] == 'Staff'){
+    else {
+      if (projects[0] == 'Staff') {
         return "a Staff Member at DALI Lab"
       }
-      if (projects.length == 1){
+      if (projects.length == 1) {
         return `working on the ${projects[0]} project`
       }
-      if (projects.length == 2){
+      if (projects.length == 2) {
         return `working on the ${projects[0]} and the ${projects[1]} project`
       }
     }
   },
 
-  staff(){
-    if (Session.get("person_to_show_modal")['project'][0] == "Staff"){
+  staff() {
+    if (Session.get("person_to_show_modal")['project'][0] == "Staff") {
       return 1;
     }
-    else{ return 0}
+    else { return 0 }
   },
 
-  terms(){
+  terms() {
     terms = Session.get("person_to_show_modal")['terms_on']
     return terms.join(' and ')
   },
@@ -341,31 +410,31 @@ Template.ModalPopup.helpers({
 });
 
 Template.ModalPopup.events({
-  'click button.btn-default'(event, instance){
-      Session.set("searching",0)
-      Session.set("mainmodaltimeout",25) // we want the modal to load faster no need to be safe about reload
+  'click button.btn-default'(event, instance) {
+    Session.set("searching", 0)
+    Session.set("mainmodaltimeout", 25) // we want the modal to load faster no need to be safe about reload
   },
-  'hide.bs.modal #modalmain'(event, instance){
+  'hide.bs.modal #modalmain'(event, instance) {
     console.log("hello")
-    Session.set("searching",0)
-    Session.set("mainmodaltimeout",25) // we want the modal to load faster no need to be safe about reload
-    
-},
+    Session.set("searching", 0)
+    Session.set("mainmodaltimeout", 25) // we want the modal to load faster no need to be safe about reload
+
+  },
 
 });
 
 Template.searchedPeople.helpers({
-  people(){
+  people() {
     return Session.get("peopleArrayNew");
   }
 });
 
 Template.searchedPeople.events({
-  'click div'(event, instance){
+  'click div'(event, instance) {
     index = event.target.parentElement.parentElement.id // depends on the HTML in carousel template
-    console.log(`index is ${index} with type ${typeof(index)}`);
+    console.log(`index is ${index} with type ${typeof (index)}`);
     Session.set("test", Session.get("test") + "wow!")
-    if (index != ""){
+    if (index != "") {
       result = Session.get('peopleJSON')['data'][index]
       console.log(result)
       Session.set("person_to_show_modal", result)
