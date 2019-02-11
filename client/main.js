@@ -15,7 +15,7 @@ Meteor.startup(function () {
   console.log("hello")
 
   Session.set("dataChanged","1")
-  Session.set("mainmodaltimeout",1200)
+  // Session.set("mainmodaltimeout",1200)
   
 
 });
@@ -301,6 +301,8 @@ Template.newcarousel.events({
 
 
 Template.carousel.onRendered(function carouselOnRendered() {
+  time = 1200;
+
   console.log("rendered!")
   // this.autorun(() => {
     console.log("we just autoran!!!")
@@ -328,7 +330,7 @@ Template.carousel.onRendered(function carouselOnRendered() {
           }
         }
       });
-    }, Session.get("mainmodaltimeout"))
+    }, time)
   // });
 
 
@@ -457,12 +459,12 @@ Template.ModalPopup.helpers({
 Template.ModalPopup.events({
   'click button.btn-default'(event, instance){
       Session.set("searching",0)
-      Session.set("mainmodaltimeout",10) // we want the modal to load faster no need to be safe about reload
+      Session.set("mainmodaltimeout",25) // we want the modal to load faster no need to be safe about reload
   },
   'hide.bs.modal #modalmain'(event, instance){
     console.log("hello")
     Session.set("searching",0)
-    Session.set("mainmodaltimeout",10) // we want the modal to load faster no need to be safe about reload
+    Session.set("mainmodaltimeout",25) // we want the modal to load faster no need to be safe about reload
     
 },
 
