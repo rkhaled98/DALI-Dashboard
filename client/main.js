@@ -130,59 +130,59 @@ Template.main.helpers({
   },
 });
 
-Template.newcarousel.onRendered(function newCarouselOnRendered(){
-  this.autorun(() => {
-    console.log("we just autoran!!!")
-    let test = Session.get("dataChanged")
-    setTimeout(function func() {
-      let $owl = $('.my-carousel-div');
-      $owl.owlCarousel({
-        items: 6,
-        // autoplay: true,
-        autoplayTimeout: 1500,
-        autoplayHoverPause: true,
-        margin: 10,
-        loop: true,
-        responsiveClass: true,
-        responsive: {
-          0: {
-            items: 6,
-            nav: true
-          },
-          600: {
-            items: 6,
-          },
-          1000: {
-            items: 6,
-          }
-        }
-      });
-    }, 0)
-  });
-});
+// Template.newcarousel.onRendered(function newCarouselOnRendered(){
+//   this.autorun(() => {
+//     console.log("we just autoran!!!")
+//     let test = Session.get("dataChanged")
+//     setTimeout(function func() {
+//       let $owl = $('.my-carousel-div');
+//       $owl.owlCarousel({
+//         items: 6,
+//         // autoplay: true,
+//         autoplayTimeout: 1500,
+//         autoplayHoverPause: true,
+//         margin: 10,
+//         loop: true,
+//         responsiveClass: true,
+//         responsive: {
+//           0: {
+//             items: 6,
+//             nav: true
+//           },
+//           600: {
+//             items: 6,
+//           },
+//           1000: {
+//             items: 6,
+//           }
+//         }
+//       });
+//     }, 0)
+//   });
+// });
 
-Template.newcarousel.helpers({
-  people() {
-    return Session.get("peopleArrayNew")
-  }
-});
+// Template.newcarousel.helpers({
+//   people() {
+//     return Session.get("peopleArrayNew")
+//   }
+// });
 
-Template.newcarousel.events({
-  'click div'(event, instance) {
-    console.log("this worked")
-    index = event.target.parentElement.id // depends on the HTML in carousel template
-    console.log(`index is ${index} with type ${typeof(index)}`);
-    Session.set("test", Session.get("test") + "wow!")
-    if (index != ""){
-      result = Session.get('peopleJSON')['data'][index]
-      console.log(result)
-      Session.set("person_to_show_modal", result)
-      Modal.show('ModalPopup')
-    }
-  // Session.set("test", Session.get("test") + "wow!");
+// Template.newcarousel.events({
+//   'click div'(event, instance) {
+//     console.log("this worked")
+//     index = event.target.parentElement.id // depends on the HTML in carousel template
+//     console.log(`index is ${index} with type ${typeof(index)}`);
+//     Session.set("test", Session.get("test") + "wow!")
+//     if (index != ""){
+//       result = Session.get('peopleJSON')['data'][index]
+//       console.log(result)
+//       Session.set("person_to_show_modal", result)
+//       Modal.show('ModalPopup')
+//     }
+//   // Session.set("test", Session.get("test") + "wow!");
     
-  },
-});
+//   },
+// });
 
 
 Template.carousel.onRendered(function carouselOnRendered() {
