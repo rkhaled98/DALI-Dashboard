@@ -6,11 +6,11 @@
 <body>
   
   <h1 class="header-text pulsate">Welcome to DALI Lab!</h1>
-
-  {{# if loaded}}
   {{> carousel}}
+  {{# if loaded}}
+  
   {{else}}
-    LOADING
+  <h4 class="header-text pulsate">Loading Live DALI data...</h4>
   {{/if}}
 
   {{> main}}

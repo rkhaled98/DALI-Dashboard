@@ -20,41 +20,41 @@ Meteor.startup(function () {
 
 });
 
-Template.body.onRendered(function(){
-  (new Promise(function(resolve, reject) {
-    setTimeout(function() {
-        console.log("successfully resolving");
-        let $owl = $('.my-carousel-div');
-        $owl.owlCarousel({
-          items: 3,
-          autoplay: true,
-          autoplayTimeout: 1500,
-          autoplayHoverPause: true,
-          margin: 10,
-          loop: true,
-          responsiveClass: true,
-          responsive: {
-            0: {
-              items: 1,
-              nav: true
-            },
-            600: {
-              items: 3,
-            },
-            1000: {
-              items: 6,
-            }
-          }
-        });
-        resolve();
-    }, 2000);
-})).then(function () {
-  Session.set("loaded", 1)
-    console.log("Promise succeeded");
-}, function () {
-    console.log("Promise failed");
-});
-});
+// Template.body.onRendered(function(){
+//   (new Promise(function(resolve, reject) {
+//     setTimeout(function() {
+//         console.log("successfully resolving");
+//         let $owl = $('.my-carousel-div');
+//         $owl.owlCarousel({
+//           items: 3,
+//           autoplay: true,
+//           autoplayTimeout: 1500,
+//           autoplayHoverPause: true,
+//           margin: 10,
+//           loop: true,
+//           responsiveClass: true,
+//           responsive: {
+//             0: {
+//               items: 1,
+//               nav: true
+//             },
+//             600: {
+//               items: 3,
+//             },
+//             1000: {
+//               items: 6,
+//             }
+//           }
+//         });
+//         resolve();
+//     }, 2000);
+// })).then(function () {
+//   Session.set("loaded", 1)
+//     console.log("Promise succeeded");
+// }, function () {
+//     console.log("Promise failed");
+// });
+// });
 // Template.body.onRendered(function () {
 //   let settings = 'pjs-settings-test.json';
 //   this.autorun(() => {
@@ -253,7 +253,7 @@ Template.carousel.onRendered(function carouselOnRendered() {
           }
         });
         resolve();
-    }, 2000);
+    }, 2750);
 })).then(function () {
   Session.set("loaded", 1)
     console.log("Promise succeeded");
