@@ -30,6 +30,6 @@ Again, you can see a live version [here](http://rafis-dali-dashboard.herokuapp.c
 
 You must have meteorJS web framework installed. 
 
-Run `meteor --port 3000` or use the port of your choice 
+Run `meteor --port 3000` or use the port of your choice in the cloned directory.
 
 In a web browser, visit [localhost:3000](http://localhost:3000/) using the port that you chose in the above command.
